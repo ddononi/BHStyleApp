@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="자동로그인" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="auto_login_allow"
+            android:summary="자동으로 로그인을 수행합니다."
+            android:title="자동로그인 허용" />
+    </PreferenceCategory>
+ 
+    <PreferenceCategory android:title="버젼정보" >
+        <PreferenceScreen
+            android:key="version"
+            android:summary="베이직 하우스 0.1b"
+            android:title="프로그램 버전" />
+    </PreferenceCategory>
+</PreferenceScreen>

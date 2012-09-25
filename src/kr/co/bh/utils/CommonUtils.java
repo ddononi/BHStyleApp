@@ -1,4 +1,4 @@
-package kr.co.bh;
+package kr.co.bh.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

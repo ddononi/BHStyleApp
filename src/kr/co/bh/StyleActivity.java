@@ -11,12 +11,12 @@ import android.os.Bundle;
  * @author 남주완
  *
  */
-public class IntroActivity extends Activity {
+public class StyleActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.intro_layout);
+        setContentView(R.layout.style_count_check_layout);
         
 	    // 네트워크에 연결이 안되면 앱을 종료 합니다.
 	    if(CommonUtils.checkNetWork(this) == false){

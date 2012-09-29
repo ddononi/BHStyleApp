@@ -38,7 +38,7 @@ public class BaseActivity extends Activity implements iConstant {
 		// 상단 타이틀 제거
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// 화면 세로 고정
-		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		// 폰트 설정
 		if(typeFace == null){
 			// 나눔고딕 글꼴

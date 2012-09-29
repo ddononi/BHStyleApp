@@ -15,14 +15,22 @@
         android:label="@string/app_name" >
         <activity
             android:theme="@android:style/Theme.NoTitleBar"
-            android:screenOrientation="landscape"
-            android:name=".StyleActivity"
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:name=".HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:name=".StyleActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

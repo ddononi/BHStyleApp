@@ -24,47 +24,47 @@
         android:background="#e9e9e9"
         android:orientation="horizontal"
         >
-        <ImageView 
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon01"
+            android:background="@drawable/btn_menu_1"
             android:layout_marginRight="8px"
             android:layout_marginLeft="8px"
             />
-        <ImageView 
+        <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon02"
+            android:background="@drawable/btn_menu_2"
             android:layout_marginRight="8px"
             />
-        <ImageView 
+        <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon03"
+            android:background="@drawable/btn_menu_3"
             android:layout_marginRight="8px"
             />
-        <ImageView 
+        <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon04"
+            android:background="@drawable/btn_menu_4"
             android:layout_marginRight="8px"
             />
-        <ImageView 
+        <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon05"
+            android:background="@drawable/btn_menu_5"
             android:layout_marginRight="8px"
             />
-        <ImageView 
+        <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon06"
+            android:background="@drawable/btn_menu_6"
             android:layout_marginRight="8px"
             />
-        <ImageView 
+        <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/menu_icon07"
+            android:background="@drawable/btn_menu_7"
             android:layout_marginRight="8px"
             />
 	</LinearLayout>

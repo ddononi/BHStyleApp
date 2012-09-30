@@ -2,12 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="#ffffff">
 		
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="76px"
         >
         <ImageView 
             android:layout_width="wrap_content"
@@ -17,42 +20,57 @@
             />
     </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="662px"
+        android:layout_height="200px"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="27px"
+        android:background="#f9f9f9"
+        >
+    	
         <EditText
             android:id="@+id/user_id"
-            android:layout_width="646px"
-            android:layout_height="76px"
-            android:layout_marginTop="76px"
-            android:paddingLeft="20px"
+            android:layout_width="296px"
+            android:layout_height="wrap_content"
             android:hint="아이디"
             android:tag="bold"
             android:textColor="#000000"
             android:inputType="textPersonName"
+            android:singleLine="true"
+            android:lines="1"
             android:textSize="31px" />
 
         <EditText
             android:id="@+id/user_pwd"
-            android:layout_width="646px"
-            android:layout_height="76px"
-            android:layout_marginTop="16px"
-            android:paddingLeft="20px"
+            android:layout_width="296px"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_id"
             android:hint="비밀번호"
             android:tag="bold"
             android:textColor="#000000"
             android:inputType="textPassword"
+            android:singleLine="true"
+            android:lines="1"
             android:textSize="31px" />
-        
 
         <CheckBox
             android:id="@+id/auto_login_btn"
-            android:layout_width="64px"
-            android:layout_height="66px"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" />        
-
-        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_submit"
+            android:layout_toRightOf="@+id/user_pwd"
+            android:text="자동 로그인"
+            android:textColor="#6c6c6c"
+            />
+        <ImageView
             android:id="@+id/login_submit"
-            android:layout_width="646px"
-            android:layout_height="89px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/user_id"
+            android:src="@drawable/btn_login"
+            android:layout_marginLeft="10px"
             android:onClick="mOnclick" />
 
+		</RelativeLayout>
 </LinearLayout>

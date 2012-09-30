@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ public class LoginActivity extends BaseActivity {
 	 */
 	private SharedPreferences mPref;
 
-	private ImageButton checkBtn;	// 자동 로그인 체크박스
+	private CheckBox checkBtn;	// 자동 로그인 체크박스
 	// 자동로그인 체크 플레그
 	private boolean checkFlag = false;
 
@@ -39,7 +40,7 @@ public class LoginActivity extends BaseActivity {
 		mPref = PreferenceManager.getDefaultSharedPreferences(this);
 		// 자동로그인 체크
 		// 체크상태는 환경설정에 바로 저장
-		checkBtn = (ImageButton)findViewById(R.id.auto_login_btn);
+		checkBtn = (CheckBox)findViewById(R.id.auto_login_btn);
 		checkBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {

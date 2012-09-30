@@ -30,6 +30,7 @@
             android:background="@drawable/btn_menu_1"
             android:layout_marginRight="8px"
             android:layout_marginLeft="8px"
+            android:onClick="StyleActivityGo"
             />
         <ImageButton 
             android:layout_width="wrap_content"

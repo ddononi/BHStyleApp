@@ -121,15 +121,15 @@ public class StyleActivity extends Activity {
 				data = new StyleDAO();
 				JSONObject obj = root.getJSONObject(i);
 				//data.setobj.getString("no"); // y 좌표 얻기
-				data.setStyleCode(obj.getString("style_code"));  //  스타일 코드
-				data.setOriginalPrice(obj.getString("first")); 		// 	원가격 얻기
-				data.setSalePrice(obj.getString("now")); 			//  현재가격 얻기
-				data.setDiscount(obj.getString("discount")); 	//  디스카운트 얻기
-				data.setStock(obj.getString("stock"));				//  재고 얻기				
-				data.setRealStock(obj.getString("real_stock")); 	//  실재고 얻기		
+				data.setStyl(obj.getString("styl"));  //  스타일 코드
+				data.setSobi(obj.getString("sobi")); 		// 	원가격 얻기
+				data.setSbps_s(obj.getString("sbps_s")); 			//  현재가격 얻기
+				data.setDcrp_b(obj.getString("dcrp_b")); 	//  디스카운트 얻기
+				data.setMjlq(obj.getString("mjlq"));				//  재고 얻기				
+				data.setSjlq(obj.getString("sjlq")); 	//  실재고 얻기		
 				data.setImageUrl(obj.getString("img_url")); 	//  이미지 얻기						
 
-				Log.i("bh", data.getRealStock());
+				Log.i("bh", data.getStyl() );
 				// 좌표를 저장
 				list.add(data);
 			}

@@ -9,15 +9,17 @@ public interface iConstant {
 	/**
 	 * 자동 로그인 여부 환경설정 구분값
 	 */
-	public String AUTO_LOGIN = "auto login allow pref";
+	public final static String AUTO_LOGIN = "auto login allow pref";
 
 	/**
 	 * 로그인 아이디 환경설정 구분값
 	 */
-	public String  LOGIN_ID = "user login id pref";
+	public final static String LOGIN_ID = "user login id pref";
 	
 	/**
 	 * 로그인 아이디 환경설정 구분값
 	 */
-	public String  LOGIN_PWD = "user login pwd pref";	
+	public final static String LOGIN_PWD = "user login pwd pref";	
+	
+	public final static int BARCODE_LENGTH = 13;
 }

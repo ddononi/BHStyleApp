@@ -4,6 +4,7 @@
 package kr.co.bh;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -91,10 +92,26 @@ public class LoginActivity extends BaseActivity {
 			return;
 		}
 
+		checkAutoLoginSave(userId, userPwd);
+		
 		// 서버에 로그인인증 처리 수행
-
+		Intent intent = new Intent(mContext, HomeActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
+
+	/**
+	 * 
+	 */
+	private void checkAutoLoginSave(CharSequence userId, CharSequence userPwd) {
+		if(checkFlag){
+			 SharedPreferences.Editor editor = mPref.edit();
+			 editor.putString(LOGIN_ID, userId.toString());
+			 editor.putString(LOGIN_PWD, userPwd.toString());
+			 editor.commit();
+		}
+	}
 
 	/**
 	 * submit button 처리

@@ -63,12 +63,12 @@
             android:text="자동 로그인"
             android:textColor="#6c6c6c"
             />
-        <ImageView
+        <ImageButton
             android:id="@+id/login_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/user_id"
-            android:src="@drawable/btn_login"
+            android:background="@drawable/btn_login"
             android:layout_marginLeft="10px"
             android:onClick="mOnclick" />
 

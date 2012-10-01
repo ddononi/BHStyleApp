@@ -8,44 +8,44 @@
     <TextView
         android:id="@+id/no"
         style="@style/list_item"
-        android:layout_width="20dp"
+        android:layout_width="100dp"
         android:text="1" />
 
     <TextView
         android:id="@+id/styl"
         style="@style/list_item"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:text="wefwefwefwef" />
 
     <TextView
         android:id="@+id/sobi"
         style="@style/list_item"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:text="최초" />
 
     <TextView
         android:id="@+id/sbps_s"
         style="@style/list_item"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:text="현재" />
 
     <TextView
         android:id="@+id/dcrp_b"
         style="@style/list_item"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="할인율" />
 
     <TextView
         android:id="@+id/mjlq"
         style="@style/list_item"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:text="재고" />
 
     <TextView
         android:id="@+id/sjlq"
         style="@style/list_item"
-        android:layout_width="50dp"
+        android:layout_width="100dp"
         android:text="실재고" />
 
     <LinearLayout

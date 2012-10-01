@@ -86,6 +86,8 @@ public class StyleActivity extends BaseActivity {
 				// check validation
 				if(TextUtils.isDigitsOnly(searchEt.getText().toString()) == false){
 					Toast.makeText(StyleActivity.this, "정확한 바코드값을 입력하세요", Toast.LENGTH_SHORT).show();
+					searchEt.setText("");
+					return;
 				}
 				//	바코드 입력길이면 서버요청 처리
 				if(searchEt.getText().toString().length() >= BARCODE_LENGTH){

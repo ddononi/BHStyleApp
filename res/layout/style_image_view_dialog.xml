@@ -2,20 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="321px"
     android:layout_height="371px"
-    android:orientation="vertical"
-    android:background="#000" >
-    
-    <ImageView
-        android:layout_height="34px"
-        android:layout_width="match_parent"
-        android:background="@drawable/popup_bg"
-         />
+    android:background="#000"
+    android:orientation="vertical" >
 
-	<kr.co.bh.utils.WebImageView
-	    android:id="@+id/style_image"
-	    android:layout_margin="13px"
-	    android:layout_width="295px"
-	    android:layout_height="311px"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="34px"
+            android:background="@drawable/popup_bg" />
+
+        <ImageButton
+            android:onClick="mOnClick"
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14px"
+            android:padding="10dp"
+            android:background="@drawable/popup_btn_close" />        
+    </RelativeLayout>
+
+    <kr.co.bh.utils.WebImageView
+        android:id="@+id/style_image"
+        android:layout_width="295px"
+        android:layout_height="311px"
+        android:layout_margin="13px"
         android:scaleType="centerInside" />
-    
+
 </LinearLayout>

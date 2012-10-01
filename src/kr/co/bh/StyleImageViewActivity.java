@@ -3,6 +3,7 @@ package kr.co.bh;
 import kr.co.bh.utils.WebImageView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 /**
  * <h1>스타일  엑티비티</h1>
@@ -31,6 +32,12 @@ public class StyleImageViewActivity extends BaseActivity {
 		Intent intent = getIntent();
 		String imageUrl = intent.getStringExtra("imageUrl");
 		styleImage.setImasgeUrl(imageUrl);
+	}
+	
+	public void mOnClick(View v){
+		if(v.getId() == R.id.close_btn){
+			finish();
+		}
 	}
 
 }

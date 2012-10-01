@@ -45,7 +45,16 @@
 			android:theme="@android:style/Theme.Dialog"
             android:name=".StyleImageViewActivity"
             android:label="@string/app_name" >
+        </activity>     
+        
+        <!-- setting 엑티비티 -->
+        <activity
+			android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="landscape"			
+            android:name=".SettingActivity"
+            android:label="@string/app_name" >
         </activity>        
+                
         
         <!-- 출고거래명세서 엑티비티 -->
         <activity

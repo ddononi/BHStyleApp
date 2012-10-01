@@ -3,6 +3,7 @@
  */
 package kr.co.bh;
 
+import kr.co.bh.utils.CommonUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +39,15 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_layout);
 		mContext = this;
+
+		// 네트워크에 연결이 안되면 앱을 종료 합니다.
+		if (CommonUtils.checkNetWork(this) == false) {
+			Toast.makeText(this, "네트워크연결이 되지 않습니다.\n" + "네트워크 수신상태를 확인하세요.",
+			Toast.LENGTH_SHORT).show();
+			finish();
+			return;
+		}
+		
 		mPref = PreferenceManager.getDefaultSharedPreferences(this);
 		// 자동로그인 체크
 		// 체크상태는 환경설정에 바로 저장
@@ -87,7 +97,9 @@ public class LoginActivity extends BaseActivity {
 		if (TextUtils.isEmpty(userId)) {
 			Toast.makeText(this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
 			return;
-		} else if (TextUtils.isEmpty(userPwd)) {
+		}
+		
+		if(TextUtils.isEmpty(userPwd)) {
 			Toast.makeText(this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
 			return;
 		}

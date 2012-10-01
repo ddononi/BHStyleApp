@@ -49,14 +49,6 @@ public class StyleActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.style_count_check_layout);
-
-		// 네트워크에 연결이 안되면 앱을 종료 합니다.
-		if (CommonUtils.checkNetWork(this) == false) {
-			// Toast.makeText(this, "네트워크연결이 되지 않습니다.\n" + "네트워크 수신상태를 확인하세요.",
-			// Toast.LENGTH_SHORT).show();
-			finish();
-			return;
-		}
 		
 		initLayout();
 

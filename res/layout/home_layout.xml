@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_4"
             android:layout_marginRight="8px"
+            android:id="@+id/style_arrange_btn"
             />
         <ImageButton 
             android:layout_width="wrap_content"

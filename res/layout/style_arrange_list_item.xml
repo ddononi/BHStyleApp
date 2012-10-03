@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff"
+    android:orientation="horizontal" >
+
+
+    <TextView
+        android:id="@+id/styl"
+        style="@style/list_item"
+        android:layout_width="180dp"
+        android:text="wefwefwefwef" />
+
+    <TextView
+        android:id="@+id/sobi"
+        style="@style/list_item"
+        android:layout_width="180dp"
+        android:text="최초" />
+
+    <TextView
+        android:id="@+id/sbps_s"
+        style="@style/list_item"
+        android:layout_width="180dp"
+        android:text="현재" />
+
+    <TextView
+        android:id="@+id/dcrp_b"
+        style="@style/list_item"
+        android:layout_width="180dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="할인율" />
+
+    <EditText
+        android:id="@+id/mjlq"
+        style="@style/list_item"
+        android:layout_width="100dp"
+        android:inputType="numberSigned"
+        android:background="@drawable/txt_input" />
+
+    <TextView
+        android:id="@+id/sjlq"
+        style="@style/list_item"
+        android:layout_width="match_parent"
+        android:text="차이" />
+
+
+</LinearLayout>

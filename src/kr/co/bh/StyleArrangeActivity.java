@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.ArrayList;
 
 import kr.co.bh.dao.StyleDAO;
-import kr.co.bh.utils.CommonUtils;
 import kr.co.bh.utils.RestTask;
 
 import org.apache.http.client.methods.HttpGet;
@@ -23,18 +22,21 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * <h1>스타일 체크 엑티비티</h1>
+ * <h1>스타일 정리 엑티비티</h1>
  * 
  * @author 남주완
  * 
  */
-public class StyleActivity extends BaseActivity {
+public class StyleArrangeActivity extends BaseActivity {
 	private String tempDummyURL = "http://wiseroh.dothome.co.kr/basic_list.php";
 	// 브로드 캐스팅 액션값
 	private static final String SEARCH_ACTION = "kr.co.bh.SEARCH";
@@ -48,7 +50,7 @@ public class StyleActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.style_count_check_layout);
+		setContentView(R.layout.style_arrange_layout);
 		
 		initLayout();
 
@@ -61,7 +63,16 @@ public class StyleActivity extends BaseActivity {
 		styleLv = (ListView)findViewById(R.id.listview);
 		// 리스트뷰 헤더
 		LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		listViewHeader = (LinearLayout)inflater.inflate(R.layout.style_list_header_item, null );
+		listViewHeader = (LinearLayout)inflater.inflate(R.layout.style_arrange_list_header_item, null );
+		// 저장버튼
+		Button saveBtn = (Button)findViewById(R.id.save_btn);
+		saveBtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 서버에 업로드 처리
+			}
+		});
+		
         // 바코드입력
 		searchEt = (EditText)findViewById(R.id.barcode_input);
         //  와쳐 설정
@@ -77,7 +88,7 @@ public class StyleActivity extends BaseActivity {
 			public void afterTextChanged(final Editable s) {
 				// check validation
 				if(TextUtils.isDigitsOnly(searchEt.getText().toString()) == false){
-					Toast.makeText(StyleActivity.this, "정확한 바코드값을 입력하세요", Toast.LENGTH_SHORT).show();
+					Toast.makeText(StyleArrangeActivity.this, "정확한 바코드값을 입력하세요", Toast.LENGTH_SHORT).show();
 					searchEt.setText("");
 					return;
 				}
@@ -127,14 +138,12 @@ public class StyleActivity extends BaseActivity {
 			for (int i = 0; i <  root.length(); i++) { // 경로 배열
 				data = new StyleDAO();
 				JSONObject obj = root.getJSONObject(i);
-
-				data.setStyl(obj.getString("styl")); 					 //  스타일 코드
-				data.setSobi(obj.getString("sobi")); 					// 	원가격 얻기
+				data.setStyl(obj.getString("styl"));  //  스타일 코드
+				data.setSobi(obj.getString("sobi")); 		// 	원가격 얻기
 				data.setSbps_s(obj.getString("sbps_s")); 			//  현재가격 얻기
-				data.setDcrp_b(obj.getString("dcrp_b")); 			//  디스카운트 얻기
-				data.setMjlq(obj.getString("mjlq"));					//  재고 얻기				
-				data.setSjlq(obj.getString("sjlq")); 					//  실재고 얻기		
-				data.setImageUrl(obj.getString("img_url")); 		//  이미지 얻기						
+				data.setDcrp_b(obj.getString("dcrp_b")); 	//  디스카운트 얻기
+				data.setMjlq(obj.getString("mjlq"));				//  재고 얻기				
+				data.setSjlq(obj.getString("sjlq")); 	//  실재고 얻기		
 
 				Log.i("bh", data.getStyl() );
 
@@ -167,11 +176,11 @@ public class StyleActivity extends BaseActivity {
 			String response = intent.getStringExtra(RestTask.HTTP_RESPONSE);
 			styleArrayList = parseJson(response);	// json 파싱처린
 			if(styleArrayList == null || styleArrayList.size() <= 0){
-				Toast.makeText(StyleActivity.this, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
+				Toast.makeText(StyleArrangeActivity.this, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			// 정상 데이터 수신이면 어댑터 설정
-			StyleListAdapter adapter = new StyleListAdapter(context, styleArrayList);
+			StyleArrangeListAdapter adapter = new StyleArrangeListAdapter(context, styleArrayList);
 			//  헤더 붙이기
 			styleLv.removeHeaderView(listViewHeader);			
 			styleLv.addHeaderView(listViewHeader);						

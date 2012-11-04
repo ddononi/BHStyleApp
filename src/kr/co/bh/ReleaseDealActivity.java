@@ -12,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,6 +19,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,36 +29,26 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * <h1>출고거래명세 엑티비티</h1>
- * 
+ * <h1>출고 거래 명세엑티비티</h1>
  * @author 남주완
  * 
  */
-public class StatementActivity extends BaseActivity {
-	private String tempDummyURL = "http://wiseroh.dothome.co.kr/basic_list.php";
+public class ReleaseDealActivity extends BaseActivity {
+	private String tempDummyURL = "http://wiseroh.vps.phps.kr/factoryinvoices_list.php";
 	// 브로드 캐스팅 액션값
 	private static final String SEARCH_ACTION = "kr.co.bh.SEARCH";
 	// ui
 	private ProgressDialog progress;
 	private ListView styleLv;
 	private LinearLayout listViewHeader;
+	private EditText searchEt;	
 	//	스타일 리스트
-	private ArrayList<StyleDAO> styleArrayList; 
+	private ArrayList<ReleaseDealData> mArrayList; 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.style_count_check_layout);
-
-		// 네트워크에 연결이 안되면 앱을 종료 합니다.
-		if (CommonUtils.checkNetWork(this) == false) {
-			// Toast.makeText(this, "네트워크연결이 되지 않습니다.\n" + "네트워크 수신상태를 확인하세요.",
-			// Toast.LENGTH_SHORT).show();
-			finish();
-			return;
-		}
-		
 		initLayout();
-
 	}
 
 	/**
@@ -70,7 +60,7 @@ public class StatementActivity extends BaseActivity {
 		LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		listViewHeader = (LinearLayout)inflater.inflate(R.layout.style_list_header_item, null );
         // 바코드입력
-        final EditText searchEt = (EditText)findViewById(R.id.barcode_input);
+		searchEt = (EditText)findViewById(R.id.barcode_input);
         //  와쳐 설정
         TextWatcher watcher = new TextWatcher() {
 			@Override
@@ -82,8 +72,15 @@ public class StatementActivity extends BaseActivity {
 			}
 			@Override
 			public void afterTextChanged(final Editable s) {
+				// check validation
+				if(TextUtils.isDigitsOnly(searchEt.getText().toString()) == false){
+					Toast.makeText(ReleaseDealActivity.this, "정확한 바코드값을 입력하세요", Toast.LENGTH_SHORT).show();
+					searchEt.setText("");
+					return;
+				}
 				//	바코드 입력길이면 서버요청 처리
 				if(searchEt.getText().toString().length() >= BARCODE_LENGTH){
+					searchEt.setEnabled(false);
 					doRequest();
 				}
 			}
@@ -94,7 +91,11 @@ public class StatementActivity extends BaseActivity {
 
 	private void doRequest() {
 		try {
-			HttpGet request = new HttpGet( new URI(tempDummyURL) );
+			//String url = tempDummyURL + ?
+			String url  = "http://wiseroh.vps.phps.kr/factoryinvoices_list.php?" +
+					"AS_MJCD=CC2003&AS_CORN=0&AN_SENO=68760&" +
+					"AS_KIND=test&AS_ITEM=test&AS_STYL=test&AS_GUBN=3";
+			HttpGet request = new HttpGet( new URI(url) );
 			RestTask task = new RestTask(this, SEARCH_ACTION);
 			task.execute(request);
 			progress = ProgressDialog.show(this, "검색중", "잠시만 기다려 주세요..", true);
@@ -117,27 +118,39 @@ public class StatementActivity extends BaseActivity {
 		registerReceiver(receiver, new IntentFilter(SEARCH_ACTION));		
 	}
 
-	private ArrayList<StyleDAO> parseJson(String responseJson) {
+	private ArrayList<ReleaseDealData> parseJson(String responseJson) {
 		Log.i("bh",responseJson);
 		StyleDAO  data;
-		 ArrayList<StyleDAO> list = new ArrayList<StyleDAO>();
+		 ArrayList<ReleaseDealData> list = new ArrayList<StyleDAO>();
 		try {
 			// root 얻기
 			JSONArray root = (new JSONObject(responseJson)).getJSONArray("list_data");
 			for (int i = 0; i <  root.length(); i++) { // 경로 배열
 				data = new StyleDAO();
 				JSONObject obj = root.getJSONObject(i);
-				//data.setobj.getString("no"); // y 좌표 얻기
-				data.setStyl(obj.getString("styl"));  //  스타일 코드
-				data.setSobi(obj.getString("sobi")); 		// 	원가격 얻기
-				data.setSbps_s(obj.getString("sbps_s")); 			//  현재가격 얻기
-				data.setDcrp_b(obj.getString("dcrp_b")); 	//  디스카운트 얻기
-				data.setMjlq(obj.getString("mjlq"));				//  재고 얻기				
-				data.setSjlq(obj.getString("sjlq")); 	//  실재고 얻기		
-				data.setImageUrl(obj.getString("img_url")); 	//  이미지 얻기						
 
+				/*
+				[{"styl":"HLTS0101","stcd":"HLTS0101WH090","colr":"WH","size":"090","sobi":12900,"pric":12900,"" +
+						"dcrt":0,"chqt":2,"siqt":0,"diqt":0,"cfyn":0,"chdt":20121012,"chsq":5343719,"chsr":1}				
+				*/
+				data.setStyl(obj.getString("styl")); 					 //  스타일 코드
+				data.setSobi(obj.getString("stcd")); 					
+				data.setSbps_s(obj.getString("colr")); 			
+				data.setDcrp_b(obj.getString("size")); 			
+				data.setMjlq(obj.getString("sobi"));					
+				data.setSjlq(obj.getString("pric")); 		
+				
+				data.setStyl(obj.getString("dcrt")); 					 //  스타일 코드
+				data.setSobi(obj.getString("chqt")); 					
+				data.setSbps_s(obj.getString("siqt")); 			
+				data.setDcrp_b(obj.getString("diqt")); 			
+				data.setMjlq(obj.getString("cfyn"));					
+				data.setSjlq(obj.getString("chdt")); 			
+				data.setSjlq(obj.getString("chsq")); 		
+				data.setSjlq(obj.getString("chsr"));
+				
 				Log.i("bh", data.getStyl() );
-				// 좌표를 저장
+
 				list.add(data);
 			}
 			return list;
@@ -160,19 +173,23 @@ public class StatementActivity extends BaseActivity {
 			if(progress != null && progress.isShowing()){
 				progress.dismiss();
 			}
+			// remove barcode number
+			searchEt.setText("");
+			searchEt.setEnabled(true);		
 			
 			String response = intent.getStringExtra(RestTask.HTTP_RESPONSE);
-			styleArrayList = parseJson(response);	// json 파싱처린
-			
-			if(styleArrayList == null || styleArrayList.size() <= 0){
-				Toast.makeText(StatementActivity.this, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
+			mArrayList = parseJson(response);	// json 파싱처린
+			if(mArrayList == null || mArrayList.size() <= 0){
+				Toast.makeText(ReleaseDealActivity.this, "데이터를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			// 정상 데이터 수신이면 어댑터 설정
-			StyleListAdapter adapter = new StyleListAdapter(context, styleArrayList);
+			StyleListAdapter adapter = new StyleListAdapter(context, mArrayList);
 			//  헤더 붙이기
+			styleLv.removeHeaderView(listViewHeader);			
 			styleLv.addHeaderView(listViewHeader);						
 			styleLv.setAdapter(adapter);
+
 		}
 	};
 

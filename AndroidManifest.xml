@@ -59,7 +59,7 @@
         <activity
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="landscape"
-            android:name=".StatementActivity"
+            android:name=".ReleaseDealActivity"
             android:label="@string/app_name" >
         </activity>        
         

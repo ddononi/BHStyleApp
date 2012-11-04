@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#e9e9e9"
+    android:background="#ffffff"
     android:orientation="vertical" 
     >
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="78px"
+        android:layout_marginBottom="70px"
         >
         <ImageView 
             android:layout_width="match_parent"
@@ -21,125 +21,131 @@
    	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#e9e9e9"
         android:orientation="horizontal"
+        android:gravity="center"
         >
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_1"
-            android:layout_marginRight="8px"
-            android:layout_marginLeft="8px"
+			android:layout_margin="4px"
             android:onClick="StyleActivityGo"
             />
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_2"
-            android:layout_marginRight="8px"
+			android:layout_margin="4px"	
             />
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_3"
-            android:layout_marginRight="8px"
+            android:layout_margin="4px"
             />
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_4"
-            android:layout_marginRight="8px"
+            android:layout_margin="4px"
             android:id="@+id/style_arrange_btn"
             />
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_5"
-            android:layout_marginRight="8px"
+            android:layout_margin="4px"
             />
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_6"
-            android:layout_marginRight="8px"
+            android:layout_margin="4px"
             />
         <ImageButton 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_menu_7"
-            android:layout_marginRight="8px"
+            android:layout_margin="4px"
             />
 	</LinearLayout>
+
 	<LinearLayout 
-	    android:layout_width="wrap_content"
+	    android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
 	    >
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="스타일 별\n수량 체크" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"
-		    android:layout_marginLeft="8px"
+		    android:layout_margin="4px"
 		    />
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="매장 반품\n 수정" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"/>
+		    android:layout_margin="4px"
+		    />
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="출고 거래\n 명세서" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"/>
+		    android:layout_margin="4px"
+		    />
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="스타일\n정리" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"/>
+		    android:layout_margin="4px"
+		    />
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="재고실사1" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"/>
+		    android:layout_margin="4px"
+		    />
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="재고실사2" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"/>
+		    android:layout_margin="4px"
+		    />
 		<TextView 
-		    android:layout_height="105px" 
-		    android:layout_width="105px" 
+		    android:layout_height="135px" 
+		    android:layout_width="133px" 
 		    android:gravity="center_horizontal" 
 		    android:textColor="#363636" 
 		    android:text="재고실사3" 
 		    android:textStyle="bold"
 		    android:textSize="20px"
-		    android:layout_marginRight="8px"/>
+		    android:layout_margin="4px"
+		    />
 	</LinearLayout>
 
 </LinearLayout>

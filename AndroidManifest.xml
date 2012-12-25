@@ -15,6 +15,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
+            android:windowSoftInputMode="stateAlwaysVisible"            
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="landscape"
             android:name=".LoginActivity"
@@ -27,7 +28,6 @@
         
         <!--  메인 홈 메뉴 엑티비티 -->
         <activity
-            android:windowSoftInputMode="stateHidden"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="landscape"
             android:name=".MenuActivity"
@@ -36,7 +36,7 @@
         
         <!--	웹뷰 엑티비티 -->
         <activity
-            android:windowSoftInputMode="stateHidden"
+            android:windowSoftInputMode="stateAlwaysVisible"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="landscape"
             android:name=".WebClientActivity"

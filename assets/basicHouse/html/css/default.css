@@ -1,0 +1,21 @@
+.focus {
+    border: 2px solid #F97515;
+    background-color: #FDC664;
+}
+
+input {
+	height: 30px;
+}
+
+img{
+	 vertical-align: middle;
+}
+	
+select{
+		height: 35px;
+		font-size: 14px;
+		
+}
+.editBox{
+		border: 0px none;
+}

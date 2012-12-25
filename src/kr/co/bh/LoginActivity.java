@@ -3,13 +3,31 @@
  */
 package kr.co.bh;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Vector;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
 import kr.co.bh.utils.CommonUtils;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -87,7 +105,7 @@ public class LoginActivity extends BaseActivity {
 	/**
 	 * 로그인 체크후 id,password 정보 저장
 	 */
-	private void checkLogin() {
+	private void doLogin() {
 		EditText userIdEt = (EditText) findViewById(R.id.user_id);
 		EditText userPwdEt = (EditText) findViewById(R.id.user_pwd);
 
@@ -104,17 +122,12 @@ public class LoginActivity extends BaseActivity {
 			return;
 		}
 
-		checkAutoLoginSave(userId, userPwd);
-		
-		// 서버에 로그인인증 처리 수행
-		Intent intent = new Intent(mContext, HomeActivity.class);
-		startActivity(intent);
-		finish();
+		new AsyncLoginTask().execute(userId.toString(), userPwd.toString());
 	}
 
 
 	/**
-	 * 
+	 * 자동 로그인여부 처리
 	 */
 	private void checkAutoLoginSave(CharSequence userId, CharSequence userPwd) {
 		if(checkFlag){
@@ -130,7 +143,86 @@ public class LoginActivity extends BaseActivity {
 	 * @param v
 	 */
 	public void mOnclick(final View v) {
-		checkLogin();
+		doLogin();
+	}
+	
+	
+	/**
+	 *	로그인 처리 쓰레드 task
+	 */
+	private class AsyncLoginTask extends AsyncTask<String, Void, Boolean>{
+		private ProgressDialog progressDialog;		
+		@Override
+		protected Boolean doInBackground(String... params) {
+			boolean result = false;
+			// http 로 보낼 이름 값 쌍 컬랙션
+			Vector<NameValuePair> vars = new Vector<NameValuePair>();
+			// HTTP post  방식을 이용하여 로그인 처리
+			vars.add(new BasicNameValuePair("id", params[0]));				// 아이디
+            vars.add(new BasicNameValuePair("pw", params[1]));			// 비밀번호   
+            String url = SERVER_BASE_URL + "loginCheck.php"; 
+            HttpPost request = new HttpPost(url);	
+            try {
+            	request.setEntity(new UrlEncodedFormEntity(vars, "UTF-8"));
+                ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                HttpClient client = new DefaultHttpClient();
+                String responseBody = client.execute(request, responseHandler);	// 전송
+                // 정상 로그인일 경우 0값
+                if (responseBody.equals(LOGIN_RESULT_OK)) {
+	   				 SharedPreferences.Editor editor = mPref.edit();
+	   				 editor.putString(LOGIN_ID, params[0]);
+	   				 editor.commit();
+    				result = true;
+    				 //	자동 로그인 여부 확인 
+    				checkAutoLoginSave(params[0], params[1]);
+                }else{
+                	Log.i("bh", responseBody);
+                }
+                
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+            } catch (ClientProtocolException e) {
+                result = false;
+            } catch (IOException e) {
+                result = false;
+            }
+
+			return result;
+		}
+		
+
+		@Override
+		protected void onProgressUpdate(Void... values) {
+			// TODO Auto-generated method stub
+			super.onProgressUpdate(values);
+		}
+
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+	    	if(progressDialog != null && progressDialog.isShowing()){
+	    		progressDialog.dismiss();
+	    	}			
+	    	// 로그인이 정상이면 아이디 정보를 공유설정값에 저장한
+	    	if(result){
+	    		// 서버에 로그인인증 처리 수행
+	    		Intent intent = new Intent(mContext, MenuActivity.class);
+	    		startActivity(intent);
+	    		finish();
+	    	}else{
+	    		Toast.makeText(LoginActivity.this, "로그인 정보를 확인하세요", Toast.LENGTH_SHORT).show();
+	    	}
+		}
+
+		@Override
+		protected void onPreExecute() {
+			progressDialog = ProgressDialog.show(LoginActivity.this, "로그인", "잠시만 기다려 주세요..", true);			
+		}
+		
+		
+		
+		
 	}
 
 }

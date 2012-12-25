@@ -1,0 +1,511 @@
+<!DOCTYPE html> 
+<html> 
+<meta charset="utf-8" /> 
+<title>베이직하우스</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">   
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link href="css/black-tie/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+<link href="css/default.css" rel="stylesheet">
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.ui.js"></script>
+<script src="../js/jquery.touchToClick.js"></script>
+<script src="../js/common.js"></script>
+<style>
+	table tr{
+		height : 35px;
+	}	
+	
+	td{
+		padding : 5px 0 5px 0;
+		border-bottom: 1px solid #e9e9e9;
+	}
+	#searchBox{
+		margin-bottom: 50px;
+	}
+	
+	h1{
+		background-color: #D3D3D3;
+		font-size: 18px;
+		height: 30px;		
+		padding-top: 7px;
+	}
+	h1 *{
+		margin : 0 auto;
+		margin-left : 5px;
+		margin-right:  5px;
+	}
+
+</style>
+<script type="text/javascript">
+
+$(function(){
+	var isLoding = false;	// 로딩바 상태
+	//  명세 조회 버튼 처리
+  $( "#items_search_btn" )
+        .button()
+        .click(function( event ) {
+        	loadJsonData();
+           
+   });
+   
+
+  //  스타일 조회 버튼 처리
+  $( "#style_search_btn" )
+        .button()
+        .click(function( event ) {
+        	loadJsonData();
+           
+   });
+     
+  //  스타일 정리 버튼 처리
+  $( "#style_save_btn" )
+        .button()
+        .click(function( event ) {
+        	saveJsonData();
+           
+   });
+   
+   //  스타일 정리 버튼 처리
+  $( "#style_find_btn" )
+        .button()
+        .click(function( event ) {
+        	saveJsonData();
+           
+   });
+  
+  // 	위치 버튼  
+  $( "#location_btn" )
+        .button()
+        .click(function( event ) {
+            event.preventDefault();
+    });   
+    
+    // 툴팁처리
+	$( document ).tooltip();
+ 	
+ 	// 포커스 효과처리	
+	$('input[type="text"]').focus(function() {
+	    $(this).addClass("focus");
+	});
+	 
+	$('input[type="text"]').blur(function() {
+	    $(this).removeClass("focus");
+	}); 		
+	
+	
+	$(document).ready(function() {
+     
+     loadJsonKindData();
+     
+	});
+	
+
+/*
+styl	VARCHAR(20)	스타일	
+stcd	VARCHAR(40)	제품코드(스타일+칼라+사이즈)	
+colr	VARCHAR(5)	칼라	
+size	VARCHAR(5)	사이즈	
+sobi	numeric(8,0)	최초가	
+pric	numeric(8,0)	현재판매가	
+dcrt	numeric(5,4)	할인율	
+chqt	numeric(7,0)	입고예정수량	
+siqt	numeric(7,0)	재고실사수량(=입고예정)	
+diqt	numeric(7,0)	차이수량	
+cfyn	VARCHAR(1)	검수유무(Y,N)	
+chdt	VARCHAR(8)	출고일	추가
+chsq	numeric(9,0)	출고seq	추가
+chsr	numeric(5,0)	출고ser	추가
+*/
+	
+// jsonp url
+var JOSNP_STYLE_CHECK_URL = "http://wiseroh.vps.phps.kr/factoryInvoices_list.php";
+var bokGubunURL = "http://wiseroh.vps.phps.kr/bokGubun.php";
+var JOSNP_SAVE_URL = "http://wiseroh.vps.phps.kr/factoryInvoices_save.php";	
+
+	loadJsonData = function(){
+	    var items = [];
+	    $("#list").empty();	    	   
+	    $("#listSum").empty();
+		$.ajax({
+		   type: 'GET',
+		    url: JOSNP_STYLE_CHECK_URL,
+		    async: false,
+			jsonpCallback: 'jsonCallback1',			// 콜백 메소드명
+		 	contentType: "application/json",
+			dataType: 'jsonp',								// 크로스 도메인이유로 jsonp 처리
+	    	success: function(json) {
+	    		// list_data
+				var arr = json.list_data;
+				
+				var cnt = 0;
+				var chqtSum = 0;
+				var siqtSum = 0;
+				var diqtSum = 0;
+				var pricSum1 = 0;
+				var pricSum2 = 0;
+				var diqtSum = 0;
+				
+				$.each(arr, function(key, val){
+					items.push("<tr>");
+	    			
+	    			/*hidden 영역*/
+	    			items.push('<input class="editBox" value='+val.chdt+' name="chdt" type="hidden" readonly="readonly" />');	// 출고일
+	    			items.push('<input class="editBox" value='+val.chsr+' name="chsr" type="hidden" readonly="readonly"/>');	// 출고ser
+	    			items.push('<input class="editBox" value='+val.chsq+' name="chsq" type="hidden" readonly="readonly"/>');	// 출고ser
+	    			items.push('<input class="editBox" value='+'CC2003'+' name="mjcd" type="hidden" readonly="readonly"/>');	// 매장코드
+	    			items.push('<input class="editBox" value='+0+' name="corn" type="hidden" readonly="readonly"/>');	// 코너
+	    			items.push('<input class="editBox" value='+68760+' name="seno" type="hidden" readonly="readonly"/>');	// 명세번호
+	    			items.push('<input class="editBox" value='+val.stcd+' name="stcd" type="hidden" readonly="readonly"/>');	// 명세번호
+	    			/*hidden 끝*/
+	    			
+	    			items.push('<td>'+styleCodeMask(val.stcd)+'</td>');	// 상품코드
+	    			items.push('<td>' + val.colr +'/'+val.size + '</td>');	//칼라 사이즈		
+	    			items.push('<td>' + set_money(val.sobi) + '</td>');	//최초가
+	    			items.push('<td>' + set_money(val.pric) + '</td>');	// 현재판매가
+	    			items.push('<td>' + val.dcrt+'%</td>');	// 할인률
+	    			items.push('<td>' + val.chqt+ '</td>');	// 입고예정수량
+	    			
+	    			items.push('<td>');
+	    			items.push('<select name="siqt">'); //재고실사수량
+	    			for( i=0; i<10 ; i++){
+	    				if(i == val.siqt){
+	    					items.push('<option label='+i+' value='+i+' selected="selected"/>');	
+	    				}else{
+	    					items.push('<option label='+i+' value='+i+' />');
+	    				}
+	    					
+	    			}
+	    			items.push('</select>');
+	    			items.push('</td>');
+	    			
+	    			items.push('<td><input class="editBox" value='+val.diqt+' name="diqt" type="text"  readonly="readonly"/></td>');	// 차이수량
+	    			items.push('<td>' + val.cfyn+ '</td>');	// 검수유무
+					items.push("</tr>");
+					
+					cnt++;
+					chqtSum += val.chqt; 
+					siqtSum +=val.siqt;
+					diqtSum +=val.diqt;
+					pricSum1 += val.pric*val.chqt; //입고
+					pricSum2 += val.pric*val.siqt;  //재고
+					    			
+				});
+				
+				var min = pricSum1-pricSum2;
+				
+				var itemSum = []; 
+				itemSum.push("<tr>");				
+				itemSum.push('<th>'+cnt+'</th>');
+				itemSum.push('<th>'+chqtSum+'</th>');
+				itemSum.push('<th>'+siqtSum+'</th>');
+				itemSum.push('<th>'+diqtSum+'</th>');
+				itemSum.push('<th>'+set_money(pricSum1)+'</th>');
+				itemSum.push('<th>'+set_money(pricSum2)+'</th>');
+				itemSum.push('<th>'+set_money(min)+'</th>');
+				itemSum.push("</tr>");				
+				
+				// 문자열로 변환후 테이블에 붙여주자
+	  			$("#list").append(items.join(""));
+	  			$("#listSum").append(itemSum.join(""));
+	  			
+	  			// 스타일이미지보기에 버튼ui 처리
+	  			$(".button").button();
+	  			items = [];
+		   },
+		    error: function(e) {
+		       console.log(e.message);
+		    }
+		});
+	}		
+    
+    //스타일 정리
+   saveJsonData = function(){
+   	
+   		var chdtArr = [];	//출고일
+   		$("[name='chdt']").each(function(){
+   			chdtArr.push($(this).val());
+   		});
+   		
+   		var chsqArr = [];	//출고seq
+   		$("[name='chsq']").each(function(){
+   			chsqArr.push($(this).val());
+   		});
+   		
+   		var chsrArr = [];	//출고ser
+   		$("[name='chsr']").each(function(){
+   			chsrArr.push($(this).val());
+   		});
+   		
+   		var mjcdArr = [];	//매장코드
+   		$("[name='mjcd']").each(function(){
+   			mjcdArr.push($(this).val());
+   		});
+
+   		var cornArr = [];	//코너
+   		$("[name='corn']").each(function(){
+   			cornArr.push($(this).val());
+   		});
+
+   		var senoArr = [];	//명세서번호
+   		$("[name='seno']").each(function(){
+   			senoArr.push($(this).val());
+   		});
+   		
+   		var stcdArr = [];	//상품코드
+   		$("[name='stcd']").each(function(){
+   			stcdArr.push($(this).val());
+   		});
+   		  		
+   		var siqtArr = [];	//재고실사수량
+   		$("select[name=siqt]").each(function(){
+   			siqtArr.push($(this).val());
+   		});
+   		
+   		var diqtArr = [];	//차이수량
+   		$("[name='diqt']").each(function(){
+   			diqtArr.push($(this).val());
+   		});
+   		
+   		var gsynArr = [];	//검수유무
+   		$("[name='gsyn']").each(function(){
+   			gsynArr.push($(this).val());
+   		});
+   		
+   		var gsdtArr = [];	//검수일
+   		$("[name='gsdt']").each(function(){
+   			gsdtArr.push($(this).val());
+   		});
+   		
+   		var gsidArr = [];	//검수자
+   		$("[name='gsid']").each(function(){
+   			gsidArr.push($(this).val());
+   		});
+   		
+	    var items = [];
+	    
+	   	$.ajax({
+		   type: 'POST',
+		    url: JOSNP_SAVE_URL,
+		    data : {
+				chdt : chdtArr.join("|"),  //출고일         
+				chsq : chsqArr.join("|"),  //출고seq        
+				chsr : chsrArr.join("|"),  //출고ser        
+				mjcd : mjcdArr.join("|"),  //매장코드       
+				corn : cornArr.join("|"),  //코너           
+				seno : senoArr.join("|"),  //명세서번호     
+				stcd : stcdArr.join("|"),  //상품코드       
+				siqt : siqtArr.join("|"),  //재고실사수량   
+				diqt : diqtArr.join("|"),  //차이수량       
+				gsyn : gsynArr.join("|"),  //검수유무(Y, N) 
+				gsdt : gsdtArr.join("|"),  //검수일         
+				gsid : gsidArr.join("|")  //검수자         
+		    },
+	    	success: function(data) {
+	    		alert(data);
+
+	    		if($.trim(data) == 1){
+	    			alert("스타일 정리 완료");
+	    		}else{
+	    			alert("시스템 오류 입니다. 다시 시도해주세요");
+	    		}
+				
+	  			loadJsonData();
+	  			// 스타일이미지보기에 버튼ui 처리
+		    },
+		    error: function(e) {
+		       console.log(e.message);
+		       alert(e.message);
+		    }
+		});
+	    
+	    
+	}
+    
+    
+   loadJsonKindData = function(){
+	    var items1 = [];
+	    var items2 = [];
+	    	    	    
+		$.ajax({
+		   type: 'GET',
+		    url: bokGubunURL,
+		    async: false,
+			jsonpCallback: 'jsonCallback2',			// 콜백 메소드명
+		 	contentType: "application/json",
+			dataType: 'jsonp',								// 크로스 도메인이유로 jsonp 처리
+	    	success: function(json) {
+	    		// list_data
+				
+				var arr2 = json.bok_data;
+				$.each(arr2, function(key, val){
+					items1.push('<option value='+val.zz03_code+'>' + val.zz03_cdc1  + '</option>');
+				});
+
+				var arr2 = json.item_data;
+				$.each(arr2, function(key, val){
+					items2.push('<option value='+val.zz03_code+'>' + val.zz03_cdc1  + '</option>');
+				});
+				
+				// 문자열로 변환후 테이블에 붙여주자
+	  			$("#bok").empty().append(items1.join(""));
+	  			$("#items").empty().append(items2.join(""));
+	  			// 스타일이미지보기에 버튼ui 처리
+	  			$(".button").button();
+	  			items = [];
+		    },
+		    error: function(e) {
+		       console.log(e.message);
+		    }
+		});
+	}		
+	
+	// ajax 기본 설정
+	$.ajaxSetup({
+		// ajax 시작전 로딩 다이얼로그 show
+		beforeSend : function(){
+			if(isLoding == false){
+    	  		// 안드로이드에  progressbar  호출
+    	  		if(window.basicHouse != undefined){
+    	  			window.basicHouse.onLodingBarShow();
+    	  		}				
+			}
+			isLoding = true;
+		},	
+		// 전송완료이면 로딩 다이얼로그를 닫아준다.
+		complete : function(jqXHR, textStatus){
+			if(isLoding == true){
+    	  		if(window.basicHouse != undefined){
+    	  			window.basicHouse.onLodingBarHide();
+    	  		}	
+			}
+			isLoding = false;
+		}
+	});	
+    
+	// row ui effect 처리
+	var $prevTr = null;	
+	$("tbody:last tr").live("click", function(){
+		var $this = $(this);
+		// 해당 row ui 효과	
+	 	$this.children("td").animate({
+                    backgroundColor: "#0666FF",
+					opacity : ".7", 
+                    color: "#fff",
+                }, 500 );
+                
+        if($prevTr != null){        
+			// 딜레이후 ui 이전 tr 원위치                
+		 	$prevTr.children("td").animate({
+	                    backgroundColor: "#fff",
+						opacity : "1", 	                    
+	                    color: "#333",
+	                }, 500 );      	
+		
+   		 }
+   		 
+  		$prevTr = $this;      
+	});
+               
+});
+
+</script>
+</head> 
+<body> 
+	<div id="main">
+		<h1><img src="./images/icon_sub.png">출고거래명세서</h1>
+		<form id="searchBox">
+			<fieldset>
+				<table width="100%"  >
+					<tr>
+						<td>
+							<label><img src="./images/img_03.png" alt="명세서번호" /></label>
+							<input value="" id="style_code" name="style_code"  title="명세서 번호를 입력하세요" size="30" type="text"/>
+							<a href="#" onclick="return false" id="items_search_btn">조회</a>
+						</td>
+						<td>
+							<label><img src="./images/img_04.png" alt="복종" /></label>
+							<select id= "bok">
+								<option>로딩중..</option>
+							</select>		
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label><img src="./images/img_05.png" alt="품목" /></label>
+							<select id= "items">
+								<option>로딩중..</option>
+							</select>
+						</td>
+						<td>						
+							<label><img src="./images/img_06.png" alt="스타일" /></label>
+							<input value="" id="product_name" name="product_name" disabled="true"   size="30" type="text" />
+							<a href="#" onclick="return false" id="style_search_btn">조회</a>
+						</td>	
+					</tr>
+					<tr>
+						<td>
+							<label><img src="./images/img_07.png" alt="화면출력" /></label>
+							<select id= "sep">
+								<option value="Y">스타일</option>
+								<option value="Y">컬러</option>
+								<option value="Y">사이즈</option>								
+							</select>	
+							<a href="#" onclick="return false" id="style_save_btn">스타일정리</a> 
+							<a href="#" onclick="return false" id="style_find_btn">스타일찾기</a> 							
+						</td>
+					</tr>
+			</fieldset>	
+		</form>
+		
+		<table width="100%"  cellpadding="0" cellspacing="0"  border="1px">
+			<thead>
+				<tr>
+					<th rowspan="2">출고스타일수</th>
+					<th colspan="3">재고수량</th>
+					<th colspan="3">재고금액</th>
+				</tr>
+				<tr>
+					<th>입고예정</th>
+					<th>재고실사</th>
+					<th>차이</th>
+					<th>입고예정</th>
+					<th>재고실사</th>
+					<th>차이</th>	
+				</tr>
+				<tfoot id="listSum">
+				</tfoot>
+			</thead>
+
+		</table>
+		<br/>
+		
+		<!-- 조회화면 -->
+		<form method="post" action=""  >
+		<table width="100%" style="text-align: center; border-top : 3px solid #a93f37;" cellpadding="0" cellspacing="0" >
+			<thead>
+				<tr style="background-color: #e9e9e9">
+					<th rowspan="2">상품코드</th>
+					<th rowspan="2">컬러/사이즈</th>		
+					<th colspan="3" style="background-color: #b1b1b1">판매가</th>					
+					<th colspan="4" style="background-color: #b8b8b8">재고</th>
+				</tr>
+				<tr style="background-color: #c6c6c6">
+					<th>최초</th>					
+					<th>현재</th>						
+					<th>할인율</th>		
+					<th>입고예정</th>
+					<th>재고실사</th>
+					<th>차이</th>
+					<th>검수유무</th>	
+				</tr>
+			</thead>
+			<tbody id="list">
+			</tbody>
+		</table>
+		</form>
+	</div>
+	
+</body>
+</html>

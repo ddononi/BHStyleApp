@@ -1,0 +1,147 @@
+<!DOCTYPE html> 
+<html> 
+<meta charset="utf-8" /> 
+<title>베이직하우스</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">   
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link href="css/black-tie/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<script src="../js/jquery.touchToClick.js"></script>
+<script type="text/javascript">
+$(function(){
+    	// 조회 버튼 처리
+      $( "#search_btn" )
+            .button()
+            .click(function( event ) {
+                event.preventDefault();
+       });
+      
+      // 	위치 버튼  
+      $( "#location_btn" )
+            .button()
+            .click(function( event ) {
+                event.preventDefault();
+        });   
+        
+      // 	스타일별
+      $( "#style_btn" )
+            .button()
+            .click(function( event ) {
+                event.preventDefault();
+        });                 
+                
+                
+      // 	저장
+      $( "#save_btn" )
+            .button()
+            .click(function( event ) {
+                event.preventDefault();
+        });                   
+});
+</script>
+    
+</head> 
+<body> 
+	<div id="main">
+		<form id="searchBox">
+			<fieldset>
+				<div>
+					<label>매장코드</label>
+						<input value="" id="" name="" disabled="disabled" />
+					<label>실사일자</label>
+						<input value="" id="" name="" disabled="disabled" />	
+					<label>실사구분</label>
+						<input value="" id="" name="" disabled="disabled" />
+				</div>
+				
+				<div style="margin-top: 10px">
+					<label>위치</label>
+						<select>
+							<option value="">매장1</option>
+							<option value="">매장2</option>
+							<option value="">매장3</option>														
+						</select>
+					<label>영역</label>
+						<select>
+							<option value="">매장1</option>
+							<option value="">매장2</option>
+							<option value="">매장3</option>														
+						</select>
+				</div>	
+
+				<div style="margin-top: 10px">
+					<a href="#" onclick="javascript: return false;" id="search_btn" >조회</a>
+					<a href="#" onclick="javascript: return false;" id="location_btn" >위치별</a>
+					<a href="#" onclick="javascript: return false;"  id="style_btn">스타일별</a>		
+					
+					<a href="#" onclick="javascript: return false;"  id="save_btn">저장</a>									
+				</div>					
+			</fieldset>	
+		</form>
+		
+		<!-- 조회화면 -->
+		<table width="100%" style="text-align: center;">
+			<thead>
+				<tr>
+					<th>스타일</th>
+					<th>수량</th>
+					<th>보기</th>										
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						HMTS0101BK070
+					</td>
+					<td>
+						55
+					</td>		
+					<td>
+						<a href="#">보기</a>
+					</td>									
+				</tr>
+				
+				<tr>
+					<td>
+						HMTS0101BK070
+					</td>
+					<td>
+						55
+					</td>		
+					<td>
+						<a href="#">보기</a>
+					</td>									
+				</tr>
+				
+				<tr>
+					<td>
+						HMTS0101BK070
+					</td>
+					<td>
+						55
+					</td>		
+					<td>
+						<a href="#">보기</a>
+					</td>									
+				</tr>
+				
+				<tr>
+					<td>
+						HMTS0101BK070
+					</td>
+					<td>
+						55
+					</td>		
+					<td>
+						<a href="#">보기</a>
+					</td>									
+				</tr>												
+			</tbody>
+			
+		</table>
+	</div>
+</body>
+</html>

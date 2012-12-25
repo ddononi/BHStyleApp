@@ -25,4 +25,15 @@ public interface iConstant {
 	 * bar code length
 	 */
 	public final static int BARCODE_LENGTH = 13;
+	
+	/**
+	 * 문의 전화 번호
+	 */
+	public final static String BH_TEL = "1544-0000";	
+	
+	public final static String HOME_PAGE = "http://www.basichouse.co.kr/";
+	
+	public final static String LOGIN_RESULT_OK = "0";
+	
+	public final static String SERVER_BASE_URL = "http://wiseroh.vps.phps.kr/";
 }

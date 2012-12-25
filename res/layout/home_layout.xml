@@ -1,154 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="1024px"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#ffffff"
-    android:orientation="vertical" 
-    >
+    android:orientation="vertical" >
+
     <LinearLayout
-        android:layout_width="1024px"
-        android:layout_height="221px"
-        android:orientation="horizontal"
-        android:layout_marginBottom="50px"
-        >
-        <!-- 
-        <ImageView 
-            android:layout_width="1024px"
-            android:layout_height="221px"
-            android:src="@drawable/menu_img"
-            />
-        -->    
-    </LinearLayout>
-    
-   	<LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        >
-        <ImageButton
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_1"
-			android:layout_margin="4px"
-            android:onClick="StyleActivityGo"
-            />
-        <ImageButton 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_2"
-			android:layout_margin="4px"	
-            />
-        <ImageButton 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_3"
-            android:layout_margin="4px"
-            android:onClick=""
-            />
-        <ImageButton 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_4"
-            android:layout_margin="4px"
-            android:id="@+id/style_arrange_btn"
-            />
-        <ImageButton 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_5"
-            android:layout_margin="4px"
-            />
-        <ImageButton 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_6"
-            android:layout_margin="4px"
-            />
-        <ImageButton 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-            android:background="@drawable/btn_menu_7"
-            android:layout_margin="4px"
-            />
-	</LinearLayout>
+        android:orientation="vertical" >
 
-	<LinearLayout 
-	    android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-	    >
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="스타일 별\n수량 체크" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="매장 반품\n 수정" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="출고 거래\n 명세서" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="스타일\n정리" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="재고실사1" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="재고실사2" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-		<TextView 
-		    android:layout_height="135px" 
-		    android:layout_width="133px" 
-		    android:gravity="center_horizontal" 
-		    android:textColor="#363636" 
-		    android:text="재고실사3" 
-		    android:textStyle="bold"
-		    android:textSize="20px"
-		    android:layout_margin="4px"
-		    />
-	</LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="center" >
 
+            <ImageButton
+                android:id="@+id/style_amount_check_btn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="25dp"
+                android:background="@drawable/btn_menu_1" />
+
+            <ImageButton
+                android:id="@+id/shop_return_btn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:layout_toRightOf="@id/style_amount_check_btn"
+                android:background="@drawable/btn_menu_2" />
+
+            <ImageButton
+                android:id="@+id/factory_invoice_btn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:layout_toRightOf="@id/shop_return_btn"
+                android:background="@drawable/btn_menu_3" />
+
+            <ImageButton
+                android:id="@+id/style_arrange_btn"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:layout_toRightOf="@id/factory_invoice_btn"
+                android:background="@drawable/btn_menu_4" />
+
+            <TextView
+                android:id="@+id/style_amount_check_txt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/style_amount_check_btn"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:text="스타일체크"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/shop_return_txt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/shop_return_btn"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_toRightOf="@id/style_amount_check_txt"
+                android:gravity="center_horizontal"
+                android:text="매장 반품"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/factory_invoice_txt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/factory_invoice_btn"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_toRightOf="@id/shop_return_txt"
+                android:gravity="center_horizontal"
+                android:text="출고거래"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/style_arrange_txt"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/style_arrange_btn"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_toRightOf="@id/factory_invoice_txt"
+                android:gravity="center_horizontal"
+                android:text="스타일정리"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <ImageButton
+                android:id="@+id/inventory_check1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="25dp"
+                android:background="@drawable/btn_menu_5" />
+
+            <ImageButton
+                android:id="@+id/inventory_check2"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:layout_toRightOf="@id/inventory_check1"
+                android:background="@drawable/btn_menu_6" />
+
+            <ImageButton
+                android:id="@+id/inventory_check3"
+                android:layout_toRightOf="@id/inventory_check2"                
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/btn_menu_7" />
+
+            <ImageButton
+                android:id="@+id/help_btn"
+                android:layout_toRightOf="@id/inventory_check3"                
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_margin="25dp"
+                android:background="@drawable/btn_menu_4" />
+
+            <TextView
+                android:layout_below="@id/inventory_check1"
+                android:id="@+id/inventory_check1_txt"                
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center_horizontal"
+                android:text="재고실사1"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_toRightOf="@id/inventory_check1_txt"                  
+                android:layout_below="@id/inventory_check2"
+                android:id="@+id/inventory_check2_txt"                   
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center_horizontal"
+                android:text="재고실사2"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_toRightOf="@id/inventory_check2_txt"                  
+                android:layout_below="@id/inventory_check3"
+                android:id="@+id/inventory_check3_txt"                   
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center_horizontal"
+                android:text="재고실사3"
+                android:textColor="#363636"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_below="@id/help_btn"
+                android:id="@+id/help_txt"                   
+                android:layout_toRightOf="@id/inventory_check3_txt"  
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:gravity="center_horizontal"
+                android:textColor="#363636"
+                android:text="옵션"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

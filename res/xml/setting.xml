@@ -6,6 +6,21 @@
             android:summary="자동으로 로그인을 수행합니다."
             android:title="자동로그인 허용" />
     </PreferenceCategory>
+    
+
+    <PreferenceCategory android:title="문의" >
+        <PreferenceScreen
+            android:key="tel"
+            android:summary="베이직 하우스 문의전화번호 연결"
+            android:title="문의 전화 연결" />
+    </PreferenceCategory>  
+    
+    <PreferenceCategory android:title="홈페이지" >
+        <PreferenceScreen
+            android:key="tel"
+            android:summary="http://www.basichouse.co.kr"
+            android:title="문홈페이지" />
+    </PreferenceCategory>        
  
     <PreferenceCategory android:title="버젼정보" >
         <PreferenceScreen
@@ -13,4 +28,5 @@
             android:summary="베이직 하우스 0.1b"
             android:title="프로그램 버전" />
     </PreferenceCategory>
+   
 </PreferenceScreen>

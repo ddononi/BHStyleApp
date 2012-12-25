@@ -3,6 +3,7 @@ package kr.co.bh;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 /**
@@ -31,7 +32,17 @@ public class SettingActivity extends PreferenceActivity implements OnSharedPrefe
 
 	@Override
 	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
-
+        if (key.equals("tel")) {
+        	// 전화 걸기
+        	Uri uri = Uri.parse("tel:" + iConstant.BH_TEL);
+        	Intent intent = new Intent(Intent.ACTION_DIAL, uri);  
+        	startActivity(intent);      
+        }else if(key.equals("homepage")) {
+        	// 홈페이지 띄우기
+        	Uri uri = Uri.parse(iConstant.HOME_PAGE);
+        	Intent intent  = new Intent(Intent.ACTION_VIEW,uri);
+        	startActivity(intent);        	
+        }
 
 	}
 }

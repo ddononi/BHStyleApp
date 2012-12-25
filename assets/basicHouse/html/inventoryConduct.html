@@ -1,0 +1,284 @@
+<!DOCTYPE html> 
+<html> 
+<meta charset="utf-8" /> 
+<title>베이직하우스</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">   
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link href="css/black-tie/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+<link href="css/default.css" rel="stylesheet">
+<script src="../js/jquery.min.js"></script>
+<script src="../js/jquery.ui.js"></script>
+<script src="../js/jquery.touchToClick.js"></script>
+<script src="../js/common.js"></script>
+<style>
+	table tr{
+		height : 35px;
+	}	
+	
+	td{
+		padding : 5px 0 5px 0;
+		border-bottom: 1px solid #e9e9e9;
+	}
+	#searchBox{
+		margin-bottom: 50px;
+	}
+	
+	h1{
+		background-color: #D3D3D3;
+		font-size: 18px;
+		height: 30px;		
+		padding-top: 7px;
+	}
+	h1 *{
+		margin : 0 auto;
+		margin-left : 5px;
+		margin-right:  5px;
+	}
+</style>
+<script type="text/javascript">
+// jsonp url
+var JOSNP_STYLE_CHECK_URL = "http://wiseroh.vps.phps.kr/basic_list.php";
+var JOSNP_LOCATION_URL = "http://wiseroh.vps.phps.kr/locationGubun.php";
+
+$(function(){
+	var isLoding = false;	// 로딩바 상태
+	// 조회 버튼 처리
+  $( "#search_btn" )
+        .button()
+        .click(function( event ) {
+            event.preventDefault();
+   });
+  
+  // 	위치별 버튼  
+  $( "#location_btn" )
+        .button()
+        .click(function( event ) {
+            event.preventDefault();
+    });   
+      //스타일 버튼  
+  $( "#style_btn" )
+        .button()
+        .click(function( event ) {
+            event.preventDefault();
+    });   
+    
+    // 툴팁처리
+	$( document ).tooltip();
+ 	
+ 	// 포커스 효과처리	
+	$('input[type="text"]').focus(function() {
+	    $(this).addClass("focus");
+	});
+	 
+	$('input[type="text"]').blur(function() {
+	    $(this).removeClass("focus");
+	}); 		
+	// 바코드 값 조회처리
+	$('#style_code').keydown(function(event) {
+	   
+	   var $this = $(this);
+	   //	13자리 이상이면
+	   if($this.val().length >= 13){
+			loadJsonData();
+	  		$this.val("");	   	
+	   }
+	});
+	
+	// ajax 기본 설정
+	$.ajaxSetup({
+		// ajax 시작전 로딩 다이얼로그 show
+		beforeSend : function(){
+			if(isLoding == false){
+    	  		// 안드로이드에  progressbar  호출
+    	  		if(window.basicHouse != undefined){
+    	  			window.basicHouse.onLodingBarShow();
+    	  		}				
+			}
+			isLoding = true;
+		},	
+		// 전송완료이면 로딩 다이얼로그를 닫아준다.
+		complete : function(jqXHR, textStatus){
+			if(isLoding == true){
+    	  		if(window.basicHouse != undefined){
+    	  			window.basicHouse.onLodingBarHide();
+    	  		}	
+			}
+			isLoding = false;
+		}
+	});	
+	
+	
+		/*
+	 * 매장 반품 jsonp을 받아온후 
+	 * 파싱처리후 select 박스에 동적 option html 을 생성한다. 
+	 */
+	loadLocationData = function(){
+		$( "#dialog-modal" ).dialog("open");
+	    var items = [];
+		$.ajax({
+		   type: 'GET',
+		    url: JOSNP_LOCATION_URL,
+		    async: false,
+			jsonpCallback: 'jsonCallback1',			// 콜백 메소드명
+		 	contentType: "application/json;charset=UTF-8",
+			dataType: 'jsonp',								// 크로스 도메인이유로 jsonp 처리
+	    	success: function(json) {
+	    		// list_data
+				var arr = json.list_data;
+				$.each(arr, function(key, val){
+					// option 생성
+					items.push('<option value='+val.zz03_code+'>' + val.zz03_cdc1  + '</option>');					
+				});
+				// 문자열로 변환후 셀렉트박스에 붙여주자
+	  			$("#location").empty().append(items.join(""));
+	  			// 스타일이미지보기에 버튼ui 처리
+	  			items = [];
+		    },
+		    error: function(e) {
+		       console.log(e.message);
+		    	$( "#dialog-modal" ).dialog( "close" );		       
+		    }
+		});
+	}
+	
+	
+	loadJsonData = function(){
+		$( "#dialog-modal" ).dialog("open");
+	    var items = [];
+		$.ajax({
+		   type: 'GET',
+		    url: JOSNP_STYLE_CHECK_URL,
+		    async: false,
+			jsonpCallback: 'jsonCallback',			// 콜백 메소드명
+		 	contentType: "application/json",
+			dataType: 'jsonp',								// 크로스 도메인이유로 jsonp 처리
+	    	success: function(json) {
+	    		// list_data
+				var arr = json.list_data;
+				$.each(arr, function(key, val){
+					// tr td 생성
+					// 항목 순서는 다음과 같다.
+					// No,	상품코드,	최초,	현재,	할인율,		재고,	실재고,	스타일보기
+					items.push("<tr>");
+	    			items.push('<td>' + (++key) + '</td>');						
+	    			items.push('<td>' + val.styl + '</td>');				
+	    			items.push('<td>' + set_money(val.sobi) + '</td>');				
+	    			items.push('<td>' + set_money(val.sbps_s) + '</td>');				
+	    			items.push('<td>' + val.dcrp_b + '</td>');				
+	    			items.push('<td>' + val.mjlq + '</td>');			
+	    			items.push('<td>' + val.sjlq + '</td>');	
+					items.push("</tr>");    			
+				});
+				// 문자열로 변환후 테이블에 붙여주자
+	  			$("tbody").append(items.join(""));
+	  			// 스타일이미지보기에 버튼ui 처리
+	  			$(".button").button();
+	  			items = [];
+		    },
+		    error: function(e) {
+		       console.log(e.message);
+		    }
+		    
+		});
+	}	
+	
+	// 스타일 보기 버튼 동적 바인딩  처리
+	$(".styleImage").live("click", function(){
+			// 안드로이드에 이미지 뷰 호출
+	  		if(window.basicHouse != undefined){
+	  			var imageUrl = $(this).attr("href");
+	  			window.basicHouse.onLodingBarHide(imageUrl);
+	  		}			
+	});
+	
+	// row ui effect 처리
+	$("tbody tr").live("click", function(){
+		var $this = $(this);
+		// 해당 row ui 효과	
+	 	$this.children("td").animate({
+                    backgroundColor: "#0666FF",
+					opacity : ".7", 
+                    color: "#fff",
+                }, 500 );  
+		// 딜레이후 ui 원위치                
+        setTimeout(function(){
+		 	$this.children("td").animate({
+	                    backgroundColor: "#fff",
+						opacity : "1", 	                    
+	                    color: "#333",
+	                }, 500 );      	
+        }, 600);        		
+	});
+               
+});
+
+
+    
+     
+     setTimeout("loadLocationData()", 500); 
+
+
+</script>
+</head> 
+<body> 
+	<div id="main">
+		<h1><img src="./images/icon_sub.png">재고실사-입력</h1>
+		<form id="searchBox">
+			<fieldset>
+				<div>
+					<label><img src="./images/img_11.png" alt="매장코드" /></label>
+						<input value="" id="style_code" name="style_code"  title="매장명" size="30" type="text" />
+					<label><img src="./images/img_10.png" alt="실사일지" /></label>
+						<input value="" id="start_date" name="start_date"  title="기간을 입력하세요" size="8" type="date" maxlength="8" />
+					<label><img src="./images/img_09.png" alt="실사구분" /></label>
+						<select id= "gubun">
+							<option value="sty">1.스타일별</option>
+							<option value="code">2.상품코드별</option>
+						</select>		
+				</div>
+				<br/>
+				<div>
+					<label><img src="./images/img_18.png" alt="위치" /></label>
+						<select id= "location">
+							<option>로딩중..</option>								
+						</select>			
+					<label><img src="./images/img_17.png" alt="영역" /></label>
+						<select>
+							<option label="1" value="1">
+							<option label="2" value="2">
+							<option label="3" value="3">
+							<option label="4" value="4">
+							<option label="5" value="5">
+							<option label="6" value="6">
+							<option label="7" value="7">
+							<option label="8" value="8">
+							<option label="9" value="9">
+							<option label="10" value="10">
+						</select>
+				</div>
+				<br/>
+				<div>
+					<a href="#" onclick="return false" name="search_btn"  id="search_btn">조회</a>
+					<a href="#" onclick="return false" name="location_btn"  id="location_btn">위치별</a>
+					<a href="#" onclick="return false" name="style_btn"  id="style_btn">스타일별</a>
+				</div>
+			</fieldset>	
+		</form>
+		<!-- 조회화면 -->
+		<table width="100%" style="text-align: center; border-top : 2px solid #a93f37;" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr style="background-color: #D3D3D3">
+					<th>스타일</th>
+					<th>수량</th>
+					<th>스타일보기</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	
+</body>
+</html>

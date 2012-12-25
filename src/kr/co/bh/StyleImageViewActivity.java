@@ -12,15 +12,12 @@ import android.view.View;
  * 
  */
 public class StyleImageViewActivity extends BaseActivity {
-	//private String imageUrl = "http://www.basichouse.co.kr/_data/attach/201209/19/85560d431e3117053440e9fabac7aacf.jpg";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.style_image_view_dialog);
-		
 		initLayout();
-
 	}
 
 	/**
